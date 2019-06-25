@@ -19,17 +19,8 @@ As described in the [Microsoft article](https://docs.microsoft.com/en-us/aspnet/
 ```json
 {
     "CommonSecrets": {
-        "EventHubConnectionString": "##INSERT##",
-        "EventHubName": "##INSERT##",
-        "StorageContainerName": "##INSERT##",
-        "StorageAccountName": "##INSERT##",
-        "StorageAccountKey": "##INSERT##",
-        "CognitiveServicesSubscriptionKey": "##INSERT##",
-        "CognitiveServicesEndpoint": "##INSERT##",
-        "CosmosEndpointUri": "##INSERT##",
-        "CosmosPrimaryKey": "##INSERT##",
-        "CosmosDatabaseName": "##INSERT##",
-        "CosmosCollectionName": "##INSERT##"
+        "SecretName1": "##INSERT##",
+        "SecretName2": "##INSERT##"
     }
 }
 ```
