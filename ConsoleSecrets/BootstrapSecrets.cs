@@ -6,11 +6,11 @@ using System.Text;
 
 namespace ConsoleSecrets
 {
-    class BootstrapConfig
+    class BootstrapSecrets
     {
         public static IConfigurationRoot Configuration { get; set; }
 
-        static BootstrapConfig()
+        static BootstrapSecrets()
         {
 
         }
