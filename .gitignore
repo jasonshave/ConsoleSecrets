@@ -3,3 +3,5 @@
 ################################################################################
 
 /.vs/ConsoleSecrets
+/ConsoleSecrets/bin/Debug/netcoreapp2.2
+/ConsoleSecrets/obj

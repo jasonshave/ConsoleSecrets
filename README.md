@@ -1,16 +1,16 @@
-## "CommonConfiguration" class library
+## "ConsoleSecrets" class library
 
-The `CommonConfiguration` project includes a concrete class for holding the mapping of user secrets so they can be referenced by your console application project(s). This follows the .NET Core configuration provider reference as shown [here](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/?view=aspnetcore-2.2).
+The `ConsoleSecrets` project includes a concrete class for holding the mapping of user secrets so they can be referenced by your console application project(s). This follows the .NET Core configuration provider reference as shown [here](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/?view=aspnetcore-2.2).
 
-As described in the [Microsoft article](https://docs.microsoft.com/en-us/aspnet/core/security/app-secrets?view=aspnetcore-2.2&tabs=windows), the `secrets.json` file maps the configuration key/value pairs to a POCO called `CommonSecrets` in the `CommonConfiguration` project. This file must be created locally on your PC and populated with your configuration/secrets
+As described in the [Microsoft article](https://docs.microsoft.com/en-us/aspnet/core/security/app-secrets?view=aspnetcore-2.2&tabs=windows), the `secrets.json` file maps the configuration key/value pairs to a POCO called `Secrets` in the `ConsoleSecrets` project. This file must be created locally on your PC and populated with your configuration/secrets
 
 ### Preparing your `secrets.json` file
 
 1. Create a new GUID by opening PowerShell and typing `[guid]::NewGuid()`.
 
-2. Open the Visual Studio solution, click on the `CommonConfiguration` project, locate `<UserSecretsId>XXXXXXXX-XXXXX-XXXXXXXX-XXXXXXXX</UserSecretsId>` and paste in your new GUID value from the previous step.
+2. Open the Visual Studio solution, click on the `ConsoleSecrets` project, locate `<UserSecretsId>CREATE_A_GUID_AND_PUT_IT_HERE</UserSecretsId>` and paste in your new GUID value from the previous step.
 
-3. Navigate to the hidden folder on your PC at `C:\Users\<yourId>\AppData\Roaming\Microsoft\UserSecrets` and create a folder with the name of the GUID.
+3. Navigate to the hidden folder on your PC at `C:\Users\<yourname>\AppData\Roaming\Microsoft\UserSecrets` and create a folder with the name of the GUID.
 
 4. Within this newly created directory, create a file called `secrets.json`.
 
@@ -18,7 +18,7 @@ As described in the [Microsoft article](https://docs.microsoft.com/en-us/aspnet/
 
 ```json
 {
-    "CommonSecrets": {
+    "Secrets": {
         "SecretName1": "##INSERT##",
         "SecretName2": "##INSERT##"
     }
