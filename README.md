@@ -1,10 +1,12 @@
-## "ConsoleSecrets" class library
+# "ConsoleSecrets" class library
 
 The `ConsoleSecrets` project includes a concrete class for holding the mapping of user secrets so they can be referenced by your console application project(s). This follows the .NET Core configuration provider reference as shown [here](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/?view=aspnetcore-2.2).
 
-As described in the [Microsoft article](https://docs.microsoft.com/en-us/aspnet/core/security/app-secrets?view=aspnetcore-2.2&tabs=windows), the `secrets.json` file maps the configuration key/value pairs to a POCO called `Secrets` in the `ConsoleSecrets` project. This file must be created locally on your PC and populated with your configuration/secrets
+As described in the [Microsoft article](https://docs.microsoft.com/en-us/aspnet/core/security/app-secrets?view=aspnetcore-2.2&tabs=windows), the `secrets.json` file maps the configuration key/value pairs to a POCO called `Secrets` in the `ConsoleSecrets` project.
 
-### Preparing your 'secrets.json' file
+This project is based off [Grant Hair's solution](https://medium.com/@granthair5/how-to-add-and-use-user-secrets-to-a-net-core-console-app-a0f169a8713f).
+
+## Preparing your 'secrets.json' file
 
 1. Create a new GUID by opening PowerShell and typing `[guid]::NewGuid()`.
 
@@ -29,23 +31,30 @@ As described in the [Microsoft article](https://docs.microsoft.com/en-us/aspnet/
 
 ## Using secrets
 
-To use a secret from the existing `Secrets` class, simply add a field for the object to your `Program.cs` file as follows:
+To use a secret from the existing `Secrets` class, simply add a reference to the class library and add a field for the object to your `Program.cs` file as follows:
 
 ```c#
-private static Secrets secrets;
+private static Secrets secrets = BootstrapSecrets.GetSecrets<Secrets>(nameof(Secrets));
 ```
 
-Then call the static method `GetSecrets<T>` to populate the field as follows:
+Then call the static generic method `GetSecrets<T>` outside of your `Main` method to populate the field as follows:
 
 ```c#
-secrets = BootstrapSecrets.GetSecrets<Secrets>(nameof(Secrets));
-```
+class Program
+{
+    private static Secrets secrets = BootstrapSecrets.GetSecrets<Secrets>(nameof(Secrets));
 
-Lastly, you can reference the properties by name to ensure strong typing:
+    static void Main(string[] args)
+    {
+        Console.WriteLine(secrets.SecretName1);
+        SomeCustomMethod();
+    }
 
-```c#
-secrets.SecretName1
-secrets.SecretName2
+    private async Task SomeCustomMethod()
+    {
+        Console.WriteLine(secrets.SecretName2);
+    }
+}
 ```
 
 ## Extending/Adding new secrets
