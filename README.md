@@ -38,7 +38,7 @@ private static Secrets secrets;
 Then call the static method `GetSecrets<T>` to populate the field as follows:
 
 ```c#
-secrets = BootstrapConfig.GetSecrets<Secrets>(nameof(Secrets));
+secrets = BootstrapSecrets.GetSecrets<Secrets>(nameof(Secrets));
 ```
 
 Lastly, you can reference the properties by name to ensure strong typing:
