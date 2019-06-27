@@ -1,5 +1,4 @@
-﻿using System;
-
+﻿
 namespace ConsoleSecrets
 {
     public class Secrets
