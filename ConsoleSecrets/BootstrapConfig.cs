@@ -15,7 +15,7 @@ namespace ConsoleSecrets
 
         }
 
-        public static T GetConfiguration<T>(string sectionName) where T : class
+        public static T GetSecrets<T>(string sectionName) where T : class
         {
             var devEnvironmentVariable = Environment.GetEnvironmentVariable("NETCORE_ENVIRONMENT");
             var isDevelopment = string.IsNullOrEmpty(devEnvironmentVariable) || devEnvironmentVariable.ToLower() == "development";

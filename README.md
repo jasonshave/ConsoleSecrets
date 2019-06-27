@@ -4,7 +4,7 @@ The `ConsoleSecrets` project includes a concrete class for holding the mapping o
 
 As described in the [Microsoft article](https://docs.microsoft.com/en-us/aspnet/core/security/app-secrets?view=aspnetcore-2.2&tabs=windows), the `secrets.json` file maps the configuration key/value pairs to a POCO called `Secrets` in the `ConsoleSecrets` project. This file must be created locally on your PC and populated with your configuration/secrets
 
-### Preparing your `secrets.json` file
+### Preparing your 'secrets.json' file
 
 1. Create a new GUID by opening PowerShell and typing `[guid]::NewGuid()`.
 
@@ -19,8 +19,8 @@ As described in the [Microsoft article](https://docs.microsoft.com/en-us/aspnet/
 ```json
 {
     "Secrets": {
-        "SecretName1": "##INSERT##",
-        "SecretName2": "##INSERT##"
+        "SecretName1": "INSERT_HERE",
+        "SecretName2": "INSERT_HERE"
     }
 }
 ```
@@ -29,24 +29,25 @@ As described in the [Microsoft article](https://docs.microsoft.com/en-us/aspnet/
 
 ## Using secrets
 
-To use a secret from the existing `CommonSecrets` class, simply add a field for the object to your `Program.cs` file as follows:
+To use a secret from the existing `Secrets` class, simply add a field for the object to your `Program.cs` file as follows:
 
 ```c#
-private static CommonSecrets secrets;
+private static Secrets secrets;
 ```
 
-Then call `GetConfiguration<T>` to populate the field as follows:
+Then call the static method `GetSecrets<T>` to populate the field as follows:
 
 ```c#
-secrets = BootstrapConfig.GetConfiguration<CommonSecrets>(nameof(CommonSecrets));
+secrets = BootstrapConfig.GetSecrets<Secrets>(nameof(Secrets));
 ```
 
 Lastly, you can reference the properties by name to ensure strong typing:
 
 ```c#
-client = new DocumentClient(new Uri(secrets.CosmosEndpointUri), secrets.CosmosPrimaryKey);
+secrets.SecretName1
+secrets.SecretName2
 ```
 
 ## Extending/Adding new secrets
 
-To add a new secret simply extend the `CommonSecrets` class in the `CommonConfiguration` project by adding your new property to the existing set. Then add the same property and your secret to the `secrets.json` file and remember to save both the class and json file.
+To add a new secret simply extend the `Secrets` class in the `ConsoleSecrets` project by adding your new property to the existing set. Then add the same property and your secret to the `secrets.json` file.
