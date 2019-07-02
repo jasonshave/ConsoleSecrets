@@ -10,7 +10,7 @@ This project is based off [Grant Hair's solution](https://medium.com/@granthair5
 
 1. Create a new GUID by opening PowerShell and typing `[guid]::NewGuid()`.
 
-2. Open the Visual Studio solution, click on the `ConsoleSecrets` project, locate `<UserSecretsId>CREATE_A_GUID_AND_PUT_IT_HERE</UserSecretsId>` and paste in your new GUID value from the previous step.
+2. Open the Visual Studio solution, click on the `ConsoleSecrets` project, locate `<UserSecretsId>CREATE_A_GUID_AND_PUT_IT_HERE</UserSecretsId>` and paste in your new GUID value from the previous step. Alternatively you can simply edit the `\ConsoleSecrets\ConsoleSecrets.csproj` file directly.
 
 3. Navigate to the hidden folder on your PC at `C:\Users\<yourname>\AppData\Roaming\Microsoft\UserSecrets` and create a folder with the name of the GUID.
 
@@ -55,6 +55,91 @@ class Program
         Console.WriteLine(secrets.SecretName2);
     }
 }
+```
+
+## Using secrets in Azure App Services, Functions, or Key Vault
+
+What's great about this approach is that you **don't need to change anything** when it comes to consuming these secrets in Azure. Additionally, since `GetSecrets<T>` is a generic method, you can separate your secrets into different class definitions.
+
+First off, let's cover the use of secrets in an Azure Function App. Navigate to the **Application configuration** section of your Function App and add a new setting. The name of the setting will reflect the name of your class (i.e. Secrets). In the example below, the class name was `CommonSecrets` and might resemble a structure such as:
+
+```c#
+    class CommonSecrets
+    {
+        public string CognitiveServicesEndpoint { get; set; }
+        public string CognitiveServicesSubscriptionKey { get; set; }
+    }
+```
+
+Conversely, your `secrets.json` file would look like:
+
+```json
+{
+    "CommonSecrets": {
+        "CognitiveServicesEndpoint": "https://someurl.example.com/api/",
+        "CognitiveServicesSubscriptionKey": "your-subscription-key"
+    }
+}
+```
+
+The following image shows what the configuration for this would look like:
+
+![FunctionAppConfiguration](\Images\Function_App_Configuration.png)
+
+You simply separate the name of your class and property with a **:** symbol:
+
+`CommonSecrets:CognitiveServicesEndpoint`
+
+If you have many secrets and you want them split across different classes (i.e. keep the Cosmos DB secrets separate from Cognitive Services for example), simply create a separate class to hold them, then call the generic method as follows:
+
+```c#
+    class CognitiveSecrets
+    {
+        public string CognitiveServicesEndpoint { get; set; }
+        public string CognitiveServicesSubscriptionKey { get; set; }
+    }
+
+    class CosmosSecrets
+    {
+        public string CosmosDbName { get; set; }
+        public string CosmosCollectionName { get; set; }
+    }
+```
+
+Also making sure to separate them for local development in your `secrets.json` file:
+
+```json
+{
+    "CognitiveSecrets": {
+        "CognitiveServicesEndpoint": "https://someurl.example.com/api/",
+        "CognitiveServicesSubscriptionKey": "your-subscription-key"
+    },
+    "CosmosSecrets": {
+        "CosmosDbName": "db01",
+        "CosmosCollectionName": "collection01"
+    }
+}
+```
+
+Then consume them in your respective services as follows:
+
+```c#
+    public class CognitiveServicesProcessor
+    {
+        private static CognitiveSecrets cognitiveSecrets = BootstrapSecrets.GetSecrets<CognitiveSecrets>(nameof(CognitiveSecrets));
+
+        private static CosmosSecrets cosmosSecrets = BootstrapSecrets.GetSecrets<CosmosSecrets>(nameof(CosmosSecrets));
+    }
+
+    public static void CognitiveServicesProcessor()
+    {
+        var someObject1 = SomeMethod1(cognitiveSecrets.CognitiveServicesEndpoint);
+    }
+
+    public static void CosmosServicesProcessor()
+    {
+        var someObject2 = SomeMethod2(cosmosSecrets.CosmosDbName, cosmosSecrets.CosmosCollectionName);
+    }
 ```
 
 ## Extending/Adding new secrets
