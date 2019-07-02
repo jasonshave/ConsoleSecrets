@@ -64,11 +64,11 @@ What's great about this approach is that you **don't need to change anything** w
 First off, let's cover the use of secrets in an Azure Function App. Navigate to the **Application configuration** section of your Function App and add a new setting. The name of the setting will reflect the name of your class (i.e. Secrets). In the example below, the class name was `CommonSecrets` and might resemble a structure such as:
 
 ```c#
-    class CommonSecrets
-    {
-        public string CognitiveServicesEndpoint { get; set; }
-        public string CognitiveServicesSubscriptionKey { get; set; }
-    }
+class CommonSecrets
+{
+    public string CognitiveServicesEndpoint { get; set; }
+    public string CognitiveServicesSubscriptionKey { get; set; }
+}
 ```
 
 Conversely, your `secrets.json` file would look like:
