@@ -86,24 +86,24 @@ The following image shows what the configuration for this would look like:
 
 ![FunctionAppConfiguration](/Images/Function_App_Configuration.png)
 
-You simply separate the name of your class and property with a **:** symbol:
+You simply separate the name of your class and property with a '**:**' symbol:
 
 `CommonSecrets:CognitiveServicesEndpoint`
 
 If you have many secrets and you want them split across different classes (i.e. keep the Cosmos DB secrets separate from Cognitive Services for example), simply create a separate class to hold them, then call the generic method as follows:
 
 ```c#
-    class CognitiveSecrets
-    {
-        public string CognitiveServicesEndpoint { get; set; }
-        public string CognitiveServicesSubscriptionKey { get; set; }
-    }
+class CognitiveSecrets
+{
+    public string CognitiveServicesEndpoint { get; set; }
+    public string CognitiveServicesSubscriptionKey { get; set; }
+}
 
-    class CosmosSecrets
-    {
-        public string CosmosDbName { get; set; }
-        public string CosmosCollectionName { get; set; }
-    }
+class CosmosSecrets
+{
+    public string CosmosDbName { get; set; }
+    public string CosmosCollectionName { get; set; }
+}
 ```
 
 Also making sure to separate them for local development in your `secrets.json` file:
@@ -124,22 +124,22 @@ Also making sure to separate them for local development in your `secrets.json` f
 Then consume them in your respective services as follows:
 
 ```c#
-    public class CognitiveServicesProcessor
-    {
-        private static CognitiveSecrets cognitiveSecrets = BootstrapSecrets.GetSecrets<CognitiveSecrets>(nameof(CognitiveSecrets));
+public class CognitiveServicesProcessor
+{
+    private static CognitiveSecrets cognitiveSecrets = BootstrapSecrets.GetSecrets<CognitiveSecrets>(nameof(CognitiveSecrets));
 
-        private static CosmosSecrets cosmosSecrets = BootstrapSecrets.GetSecrets<CosmosSecrets>(nameof(CosmosSecrets));
-    }
+    private static CosmosSecrets cosmosSecrets = BootstrapSecrets.GetSecrets<CosmosSecrets>(nameof(CosmosSecrets));
+}
 
-    public static void CognitiveServicesProcessor()
-    {
-        var someObject1 = SomeMethod1(cognitiveSecrets.CognitiveServicesEndpoint);
-    }
+public static void CognitiveServicesProcessor()
+{
+    var someObject1 = SomeMethod1(cognitiveSecrets.CognitiveServicesEndpoint);
+}
 
-    public static void CosmosServicesProcessor()
-    {
-        var someObject2 = SomeMethod2(cosmosSecrets.CosmosDbName, cosmosSecrets.CosmosCollectionName);
-    }
+public static void CosmosServicesProcessor()
+{
+    var someObject2 = SomeMethod2(cosmosSecrets.CosmosDbName, cosmosSecrets.CosmosCollectionName);
+}
 ```
 
 ## Extending/Adding new secrets
