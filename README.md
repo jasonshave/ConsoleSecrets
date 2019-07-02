@@ -84,7 +84,7 @@ Conversely, your `secrets.json` file would look like:
 
 The following image shows what the configuration for this would look like:
 
-![FunctionAppConfiguration](\Images\Function_App_Configuration.png)
+![FunctionAppConfiguration](/Images/Function_App_Configuration.png)
 
 You simply separate the name of your class and property with a **:** symbol:
 
