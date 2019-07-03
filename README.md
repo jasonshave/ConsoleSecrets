@@ -90,7 +90,7 @@ You simply separate the name of your class and property with a '**:**' symbol:
 
 `CommonSecrets:CognitiveServicesEndpoint`
 
-If you have many secrets and you want them split across different classes (i.e. keep the Cosmos DB secrets separate from Cognitive Services for example), simply create a separate class to hold them, then call the generic method as follows:
+If you have many secrets and you want them split across different classes (i.e. keep the Cosmos DB secrets separate from Cognitive Services for example), simply create a separate class to hold them, then call the generic method shown below:
 
 ```c#
 class CognitiveSecrets
