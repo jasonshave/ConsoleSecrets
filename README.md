@@ -4,8 +4,6 @@ The `ConsoleSecrets` project includes a concrete class for holding the mapping o
 
 As described in the [Microsoft article](https://docs.microsoft.com/en-us/aspnet/core/security/app-secrets?view=aspnetcore-2.2&tabs=windows), the `secrets.json` file maps the configuration key/value pairs to a POCO called `Secrets` in the `ConsoleSecrets` project.
 
-This project is based off [Grant Hair's solution](https://medium.com/@granthair5/how-to-add-and-use-user-secrets-to-a-net-core-console-app-a0f169a8713f).
-
 ## Preparing your 'secrets.json' file
 
 1. Create a new GUID by opening PowerShell and typing `[guid]::NewGuid()`.
