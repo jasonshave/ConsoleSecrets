@@ -1,4 +1,4 @@
-# "ConsoleSecrets" class library
+# "ConsoleSecrets" class library for C#
 
 The `ConsoleSecrets` project includes a concrete class for holding the mapping of user secrets so they can be referenced by your console application project(s). This follows the .NET Core configuration provider reference as shown [here](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/?view=aspnetcore-2.2).
 
